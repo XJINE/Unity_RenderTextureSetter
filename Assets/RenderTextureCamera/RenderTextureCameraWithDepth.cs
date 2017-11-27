@@ -35,9 +35,14 @@ public class RenderTextureCameraWithDepth : RenderTextureCamera
     /// </summary>
     public override void InitializeTexture()
     {
+        if (!CheckRenderTextureSettingsIsValid())
+        {
+            return;
+        }
+
         ReleaseTexture();
 
-        int width  = this.renderTextureWidth == -1 ?  Screen.width  : this.renderTextureWidth;
+        int width  = this.renderTextureWidth  == -1 ? Screen.width  : this.renderTextureWidth;
         int height = this.renderTextureHeight == -1 ? Screen.height : this.renderTextureHeight;
 
         base.renderTexture = new RenderTexture(width, height, 0, RenderTextureFormat.ARGB32);

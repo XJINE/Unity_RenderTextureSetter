@@ -20,16 +20,16 @@ public class RenderTextureCamera : MonoBehaviour
     protected RenderTexture renderTexture;
 
     /// <summary>
-    /// RenderTexture の幅。-1 のとき Screen.Width になります。
+    /// RenderTexture の幅。0 以下のとき Screen.width になります。
     /// </summary>
     [SerializeField]
-    protected int renderTextureWidth = -1;
+    protected int renderTextureWidth = 0;
 
     /// <summary>
-    /// RenderTexture の高さ。-1 のとき Screen.height になります。
+    /// RenderTexture の高さ。0 以下のとき Screen.height になります。
     /// </summary>
     [SerializeField]
-    protected int renderTextureHeight = -1;
+    protected int renderTextureHeight = 0;
 
     #endregion Field
 
@@ -101,14 +101,36 @@ public class RenderTextureCamera : MonoBehaviour
     /// </summary>
     public virtual void InitializeTexture()
     {
+        if (!CheckRenderTextureSettingsIsValid())
+        {
+            return;
+        }
+
         ReleaseTexture();
 
-        int width  = this.renderTextureWidth  == -1 ? Screen.width  : this.renderTextureWidth;
-        int height = this.renderTextureHeight == -1 ? Screen.height : this.renderTextureHeight;
+        int width  = this.renderTextureWidth  <= 0 ? Screen.width  : this.renderTextureWidth;
+        int height = this.renderTextureHeight <= 0 ? Screen.height : this.renderTextureHeight;
 
         this.renderTexture = new RenderTexture(width, height, 0, RenderTextureFormat.ARGB32);
 
         SetTextureToCamera();
+    }
+
+    /// <summary>
+    /// RenderTexture の設定が有効かどうかを検証します。
+    /// </summary>
+    /// <returns>
+    /// 有効なとき true, 無効なとき false 。
+    /// </returns>
+    protected virtual bool CheckRenderTextureSettingsIsValid()
+    {
+        // CAUTION:
+        // UnityEditor が起動した直後は、Screen.width = Screen.height = 0 となります。
+        // ExecuteInEditMode が有効なとき、起動直後から実行されるので、
+        // RenderTexture.width / height に 0 が設定される可能性があります。
+        // RenderTexture.width / height は 0 を許容しないので、これを防止する必要があります。
+
+        return !(this.renderTextureWidth <= 0 && (Screen.width == 0 || Screen.height == 0));
     }
 
     /// <summary>
