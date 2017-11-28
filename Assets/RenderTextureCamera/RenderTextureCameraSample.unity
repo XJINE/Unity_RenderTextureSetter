@@ -304,14 +304,14 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
-  orthographic: 0
+  orthographic: 1
   orthographic size: 5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingPath: -1
-  m_TargetTexture: {fileID: 1947974891}
+  m_TargetTexture: {fileID: 1577557846}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 1
@@ -379,8 +379,8 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
-  far clip plane: 1000
+  near clip plane: 0.01
+  far clip plane: 0.02
   field of view: 60
   orthographic: 0
   orthographic size: 5
@@ -412,7 +412,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!84 &1947974891
+--- !u!84 &1577557846
 RenderTexture:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
@@ -421,8 +421,8 @@ RenderTexture:
   m_ImageContentsHash:
     serializedVersion: 2
     Hash: 00000000000000000000000000000000
-  m_Width: 480
-  m_Height: 1262
+  m_Width: 1126
+  m_Height: 1270
   m_AntiAliasing: 1
   m_DepthFormat: 0
   m_ColorFormat: 0
