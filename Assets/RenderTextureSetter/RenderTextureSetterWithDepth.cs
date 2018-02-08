@@ -1,26 +1,17 @@
 ﻿using UnityEngine;
 
-/// <summary>
-/// Depth 用のテクスチャも設定する RenderTextureCamera 。
-/// </summary>
 [RequireComponent(typeof(Camera))]
 [ExecuteInEditMode]
-public class RenderTextureCameraWithDepth : RenderTextureCamera
+public class RenderTextureSetterWithDepth : RenderTextureSetter
 { 
     #region Field
 
-    /// <summary>
-    /// Depth 用の renderTexture 。
-    /// </summary>
     protected RenderTexture renderTextureDepth;
 
     #endregion Field
 
     #region Property
 
-    /// <summary>
-    /// Depth 用の RenderTexture を取得します。
-    /// </summary>
     public RenderTexture RenderTextureDepth
     {
         get { return this.renderTextureDepth; }
@@ -30,9 +21,6 @@ public class RenderTextureCameraWithDepth : RenderTextureCamera
 
     #region Method
 
-    /// <summary>
-    /// テクスチャを初期化します。
-    /// </summary>
     public override void InitializeTexture()
     {
         if (!CheckRenderTextureSettingsIsValid())
@@ -45,15 +33,13 @@ public class RenderTextureCameraWithDepth : RenderTextureCamera
         int width  = this.renderTextureWidth  <= 0 ? Screen.width  : this.renderTextureWidth;
         int height = this.renderTextureHeight <= 0 ? Screen.height : this.renderTextureHeight;
 
-        base.renderTexture = new RenderTexture(width, height, 0, RenderTextureFormat.ARGB32);
+        this.renderTexture = new RenderTexture(width, height, 0, RenderTextureFormat.ARGB32);
         this.renderTextureDepth = new RenderTexture(width, height, 24, RenderTextureFormat.Depth);
 
-        SetTextureToCamera();
+        this.camera.SetTargetBuffers(this.renderTexture.colorBuffer,
+                                     this.renderTextureDepth.depthBuffer);
     }
 
-    /// <summary>
-    /// テクスチャリソースを解放します。
-    /// </summary>
     protected override void ReleaseTexture()
     {
         base.ReleaseTexture();
@@ -62,15 +48,6 @@ public class RenderTextureCameraWithDepth : RenderTextureCamera
         {
             GameObject.DestroyImmediate(this.renderTextureDepth);
         }
-    }
-
-    /// <summary>
-    /// テクスチャをカメラに設定します。
-    /// </summary>
-    protected override void SetTextureToCamera()
-    {
-        this.camera.SetTargetBuffers(this.renderTexture.colorBuffer,
-                                     this.renderTextureDepth.depthBuffer);
     }
 
     #endregion Method
