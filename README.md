@@ -1,4 +1,4 @@
-# Unity_RenderTextureCamera
+# Unity_RenderTextureSetter
 
 Set RenderTexture to camera automatically.
 
