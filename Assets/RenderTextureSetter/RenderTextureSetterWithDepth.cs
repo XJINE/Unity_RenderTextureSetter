@@ -30,8 +30,8 @@ public class RenderTextureSetterWithDepth : RenderTextureSetter
 
         ReleaseTexture();
 
-        int width  = this.renderTextureWidth  <= 0 ? Screen.width  : this.renderTextureWidth;
-        int height = this.renderTextureHeight <= 0 ? Screen.height : this.renderTextureHeight;
+        int width  = this.renderTextureSize.x <= 0 ? Screen.width  : this.renderTextureSize.x;
+        int height = this.renderTextureSize.y <= 0 ? Screen.height : this.renderTextureSize.y;
 
         this.renderTexture = new RenderTexture(width, height, 0, RenderTextureFormat.ARGB32);
         this.renderTextureDepth = new RenderTexture(width, height, 24, RenderTextureFormat.Depth);

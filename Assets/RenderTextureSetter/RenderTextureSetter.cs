@@ -11,10 +11,7 @@ public class RenderTextureSetter : MonoBehaviour
     protected RenderTexture renderTexture;
 
     [SerializeField]
-    protected int renderTextureWidth = 0;
-
-    [SerializeField]
-    protected int renderTextureHeight = 0;
+    protected Vector2Int renderTextureSize;
 
     #endregion Field
 
@@ -25,22 +22,12 @@ public class RenderTextureSetter : MonoBehaviour
         get { return this.renderTexture; }
     }
 
-    public int RenderTextureWidth
+    public Vector2Int RenderTextureSize 
     {
-        get { return this.renderTextureWidth; }
+        get { return this.renderTextureSize; }
         set
         {
-            this.renderTextureWidth = value;
-            InitializeTexture();
-        }
-    }
-
-    public int RenderTextureHeight
-    {
-        get { return this.renderTextureHeight; }
-        set
-        {
-            this.renderTextureHeight = value;
+            this.renderTextureSize = value;
             InitializeTexture();
         }
     }
@@ -72,8 +59,8 @@ public class RenderTextureSetter : MonoBehaviour
 
         ReleaseTexture();
 
-        int width  = this.renderTextureWidth  <= 0 ? Screen.width  : this.renderTextureWidth;
-        int height = this.renderTextureHeight <= 0 ? Screen.height : this.renderTextureHeight;
+        int width  = this.renderTextureSize.x <= 0 ? Screen.width  : this.renderTextureSize.x;
+        int height = this.renderTextureSize.y <= 0 ? Screen.height : this.renderTextureSize.y;
 
         this.renderTexture = new RenderTexture(width, height, 0, RenderTextureFormat.ARGB32);
         this.camera.targetTexture = this.renderTexture;
@@ -86,7 +73,7 @@ public class RenderTextureSetter : MonoBehaviour
         // ExecuteInEditMode option will be enabled in same time.
         // RenderTexture not allow 0 width & height, so we need to ignore 0 values.
 
-        return !(this.renderTextureWidth <= 0 && (Screen.width == 0 || Screen.height == 0));
+        return !(this.renderTextureSize.x <= 0 && (Screen.width == 0 || Screen.height == 0));
     }
 
     protected virtual void ReleaseTexture()
