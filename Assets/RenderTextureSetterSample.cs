@@ -4,10 +4,10 @@
 [ExecuteInEditMode]
 public class RenderTextureSetterSample : MonoBehaviour
 {
-    public RenderTextureSetter renderTextureCamera;
+    public RenderTextureSetter renderTextureSetter;
 
     protected void OnRenderImage(RenderTexture source, RenderTexture destination)
     {
-        Graphics.Blit(this.renderTextureCamera.RenderTexture, destination);
+        Graphics.Blit(this.renderTextureSetter.RenderTexture, destination);
     }
 }

@@ -4,17 +4,12 @@
 [ExecuteInEditMode]
 public class RenderTextureSetterWithDepth : RenderTextureSetter
 { 
-    #region Field
-
-    protected RenderTexture renderTextureDepth;
-
-    #endregion Field
-
     #region Property
 
     public RenderTexture RenderTextureDepth
     {
-        get { return this.renderTextureDepth; }
+        get;
+        protected set;
     }
 
     #endregion Property
@@ -23,6 +18,12 @@ public class RenderTextureSetterWithDepth : RenderTextureSetter
 
     public override void InitializeTexture()
     {
+        if (!base.IsInitialized)
+        {
+            Initialize();
+            return;
+        }
+
         if (!CheckRenderTextureSettingsIsValid())
         {
             return;
@@ -33,20 +34,20 @@ public class RenderTextureSetterWithDepth : RenderTextureSetter
         int width  = this.renderTextureSize.x <= 0 ? Screen.width  : this.renderTextureSize.x;
         int height = this.renderTextureSize.y <= 0 ? Screen.height : this.renderTextureSize.y;
 
-        this.renderTexture = new RenderTexture(width, height, 0, RenderTextureFormat.ARGB32);
-        this.renderTextureDepth = new RenderTexture(width, height, 24, RenderTextureFormat.Depth);
+        base.RenderTexture = new RenderTexture(width, height, 0, RenderTextureFormat.ARGB32);
+        this.RenderTextureDepth = new RenderTexture(width, height, 24, RenderTextureFormat.Depth);
 
-        this.camera.SetTargetBuffers(this.renderTexture.colorBuffer,
-                                     this.renderTextureDepth.depthBuffer);
+        this.camera.SetTargetBuffers(base.RenderTexture.colorBuffer,
+                                     this.RenderTextureDepth.depthBuffer);
     }
 
     protected override void ReleaseTexture()
     {
         base.ReleaseTexture();
 
-        if (this.renderTextureDepth != null)
+        if (this.RenderTextureDepth != null)
         {
-            GameObject.DestroyImmediate(this.renderTextureDepth);
+            GameObject.DestroyImmediate(this.RenderTextureDepth);
         }
     }
 

@@ -8,8 +8,6 @@ public class RenderTextureSetter : MonoBehaviour
 
     protected new Camera camera;
 
-    protected RenderTexture renderTexture;
-
     [SerializeField]
     protected Vector2Int renderTextureSize;
 
@@ -17,9 +15,16 @@ public class RenderTextureSetter : MonoBehaviour
 
     #region Property
 
+    public bool IsInitialized
+    {
+        get;
+        protected set;
+    }
+
     public RenderTexture RenderTexture
     {
-        get { return this.renderTexture; }
+        get;
+        protected set;
     }
 
     public Vector2Int RenderTextureSize 
@@ -38,20 +43,41 @@ public class RenderTextureSetter : MonoBehaviour
 
     protected virtual void Awake()
     {
-        this.camera = base.GetComponent<Camera>();
-        InitializeTexture();
+        Initialize();
     }
 
     protected virtual void OnValidate()
     {
-        if (this.camera != null)
+        if (!Initialize())
         {
             InitializeTexture();
         }
     }
 
+    public virtual bool Initialize()
+    {
+        if (this.IsInitialized)
+        {
+            return false;
+        }
+        
+        this.IsInitialized = true;
+
+        this.camera = base.GetComponent<Camera>();
+
+        InitializeTexture();
+
+        return true;
+    }
+
     public virtual void InitializeTexture()
     {
+        if (!this.IsInitialized)
+        {
+            Initialize();
+            return;
+        }
+
         if (!CheckRenderTextureSettingsIsValid())
         {
             return;
@@ -62,14 +88,14 @@ public class RenderTextureSetter : MonoBehaviour
         int width  = this.renderTextureSize.x <= 0 ? Screen.width  : this.renderTextureSize.x;
         int height = this.renderTextureSize.y <= 0 ? Screen.height : this.renderTextureSize.y;
 
-        this.renderTexture = new RenderTexture(width, height, 0, RenderTextureFormat.ARGB32);
-        this.camera.targetTexture = this.renderTexture;
+        this.RenderTexture = new RenderTexture(width, height, 0, RenderTextureFormat.ARGB32);
+        this.camera.targetTexture = this.RenderTexture;
     }
 
     protected virtual bool CheckRenderTextureSettingsIsValid()
     {
         // CAUTION:
-        // Screen.width & Screen.height values are 0 when UnityEditor just started.
+        // Screen.width/height values are 0 when UnityEditor just started.
         // ExecuteInEditMode option will be enabled in same time.
         // RenderTexture not allow 0 width & height, so we need to ignore 0 values.
 
@@ -80,9 +106,9 @@ public class RenderTextureSetter : MonoBehaviour
     {
         this.camera.targetTexture = null;
 
-        if (this.renderTexture != null)
+        if (this.RenderTexture != null)
         {
-            GameObject.DestroyImmediate(this.renderTexture);
+            GameObject.DestroyImmediate(this.RenderTexture);
         }
     }
 
