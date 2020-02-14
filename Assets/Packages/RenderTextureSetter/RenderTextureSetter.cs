@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
-using UnityEngine.Serialization;
 
-[RequireComponent(typeof(Camera))]
-[ExecuteInEditMode]
+[RequireComponent(typeof(Camera))][ExecuteAlways]
 public class RenderTextureSetter : MonoBehaviour
 {
     #region Field
@@ -10,7 +8,6 @@ public class RenderTextureSetter : MonoBehaviour
     protected new Camera camera;
 
     [SerializeField]
-    [FormerlySerializedAs("renderTextureSize")]
     protected Vector2Int size;
 
     [SerializeField]
@@ -75,7 +72,7 @@ public class RenderTextureSetter : MonoBehaviour
         {
             return false;
         }
-        
+
         this.IsInitialized = true;
 
         this.camera = base.GetComponent<Camera>();
@@ -112,7 +109,7 @@ public class RenderTextureSetter : MonoBehaviour
     {
         // CAUTION:
         // Screen.width/height values are 0 when UnityEditor just started.
-        // ExecuteInEditMode option will be enabled in same time.
+        // "ExecuteAlways" option will be enabled in same time.
         // RenderTexture not allow 0 width & height, so we need to ignore 0 values.
 
         return !(this.size.x <= 0 && (Screen.width == 0 || Screen.height == 0));
