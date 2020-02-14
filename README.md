@@ -1,6 +1,6 @@
 # Unity_RenderTextureSetter
 
-Automatically set RenderTexture to camera in runtime.
+Set RenderTexture to camera in runtime.
 
 ## Import to Your Project
 
@@ -10,5 +10,5 @@ You can import this asset from UnityPackage.
 
 ## How to Use
 
-Add ``RenderTextureSetter.cs`` or `` RenderTextureSetterWithDepth.cs`` to camera object and set texture size with Inspector.
-When set 0 to texture size, it will be Screen.width/height.
+Add ``RenderTextureSetter.cs`` into your camera object and set the texture size and format from Inspector.
+When set 0 into the size, it will be Screen.width/height.
