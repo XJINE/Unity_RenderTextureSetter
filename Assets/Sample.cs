@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(Camera))]
-[ExecuteInEditMode]
-public class RenderTextureSetterSample : MonoBehaviour
+[RequireComponent(typeof(Camera)), ExecuteAlways]
+public class Sample : MonoBehaviour
 {
     public RenderTextureSetter renderTextureSetter;
 

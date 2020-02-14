@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Serialization;
 
 [RequireComponent(typeof(Camera))]
 [ExecuteInEditMode]
@@ -9,7 +10,11 @@ public class RenderTextureSetter : MonoBehaviour
     protected new Camera camera;
 
     [SerializeField]
-    protected Vector2Int renderTextureSize;
+    [FormerlySerializedAs("renderTextureSize")]
+    protected Vector2Int size;
+
+    [SerializeField]
+    protected RenderTextureFormat format = RenderTextureFormat.ARGB32;
 
     #endregion Field
 
@@ -27,12 +32,22 @@ public class RenderTextureSetter : MonoBehaviour
         protected set;
     }
 
-    public Vector2Int RenderTextureSize 
+    public Vector2Int Size
     {
-        get { return this.renderTextureSize; }
+        get { return this.size; }
         set
         {
-            this.renderTextureSize = value;
+            this.size = value;
+            InitializeTexture();
+        }
+    }
+
+    public RenderTextureFormat Format
+    {
+        get { return this.format; }
+        set
+        {
+            this.format = value;
             InitializeTexture();
         }
     }
@@ -85,10 +100,11 @@ public class RenderTextureSetter : MonoBehaviour
 
         ReleaseTexture();
 
-        int width  = this.renderTextureSize.x <= 0 ? Screen.width  : this.renderTextureSize.x;
-        int height = this.renderTextureSize.y <= 0 ? Screen.height : this.renderTextureSize.y;
+        int width  = this.size.x <= 0 ? Screen.width  : this.size.x;
+        int height = this.size.y <= 0 ? Screen.height : this.size.y;
 
-        this.RenderTexture = new RenderTexture(width, height, 0, RenderTextureFormat.ARGB32);
+        this.RenderTexture = new RenderTexture(width, height, 0, this.format);
+
         this.camera.targetTexture = this.RenderTexture;
     }
 
@@ -99,7 +115,7 @@ public class RenderTextureSetter : MonoBehaviour
         // ExecuteInEditMode option will be enabled in same time.
         // RenderTexture not allow 0 width & height, so we need to ignore 0 values.
 
-        return !(this.renderTextureSize.x <= 0 && (Screen.width == 0 || Screen.height == 0));
+        return !(this.size.x <= 0 && (Screen.width == 0 || Screen.height == 0));
     }
 
     protected virtual void ReleaseTexture()
