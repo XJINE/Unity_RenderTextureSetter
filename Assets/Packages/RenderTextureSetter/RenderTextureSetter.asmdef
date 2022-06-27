@@ -1,0 +1,16 @@
+{
+    "name": "RenderTextureSetter",
+    "rootNamespace": "",
+    "references": [
+        "GUID:6ed662c2b95a69d429187ea01728b9b3"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

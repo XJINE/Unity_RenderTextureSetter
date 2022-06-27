@@ -101,6 +101,13 @@
       },
       "url": "https://packages.unity.com"
     },
+    "com.xjine.iinitializable": {
+      "version": "https://github.com/XJINE/Unity_IInitializable.git?path=Assets/Packages/IInitializable",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "defcaea4ed578f3aca37851dab2090200e9daf07"
+    },
     "com.unity.modules.ai": {
       "version": "1.0.0",
       "depth": 0,

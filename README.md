@@ -2,9 +2,21 @@
 
 Set RenderTexture to camera in runtime.
 
-## Import to Your Project
+## Importing
 
-Just add a '.unitypackage'.
+You can use Package Manager or import it directly.
+
+```
+https://github.com/XJINE/Unity_RenderTextureSetter.git?path=Assets/Packages/RenderTextureSetter
+```
+
+NOTE: Because of the limitation of UnityPackageManager, it needs to install dependencies manually.
+
+### Dependencies
+
+This project use following resources.
+
+- https://github.com/XJINE/Unity_IInitializable
 
 ## How to Use
 
