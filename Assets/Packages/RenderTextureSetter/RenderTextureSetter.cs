@@ -23,7 +23,7 @@ public class RenderTextureSetter : MonoBehaviour, IInitializable
 
     protected new Camera camera;
 
-    [SerializeField] protected Vector2Int          size         = new Vector2Int(1028, 1028);
+    [SerializeField] protected Vector2Int          size         = new (1028, 1028);
     [SerializeField] protected RenderTextureFormat format       = RenderTextureFormat.ARGB32;
     [SerializeField] protected AntiAliasingLevel   antiAliasing = AntiAliasingLevel.x1;
     [SerializeField] protected DepthLevel          depth        = DepthLevel.x0;
@@ -37,42 +37,26 @@ public class RenderTextureSetter : MonoBehaviour, IInitializable
 
     public Vector2Int Size
     {
-        get { return this.size; }
-        set
-        {
-            this.size = value;
-            InitializeTexture();
-        }
+        get => size;
+        set { size = value; InitializeTexture(); }
     }
 
     public RenderTextureFormat Format
     {
-        get { return this.format; }
-        set
-        {
-            this.format = value;
-            InitializeTexture();
-        }
+        get => format;
+        set { format = value; InitializeTexture(); }
     }
 
     public AntiAliasingLevel AntiAliasing
     {
-        get { return this.antiAliasing; }
-        set
-        {
-            this.antiAliasing = value;
-            InitializeTexture();
-        }
+        get => antiAliasing;
+        set { antiAliasing = value; InitializeTexture(); }
     }
 
     public DepthLevel Depth
     {
-        get { return this.depth; }
-        set
-        {
-            this.depth= value;
-            InitializeTexture();
-        }
+        get => depth;
+        set { depth = value; InitializeTexture(); }
     }
 
     #endregion Property
@@ -91,9 +75,9 @@ public class RenderTextureSetter : MonoBehaviour, IInitializable
 
     public virtual bool Initialize()
     {
-        this.IsInitialized = true;
+        IsInitialized = true;
 
-        this.camera = base.GetComponent<Camera>();
+        camera = GetComponent<Camera>();
 
         InitializeTexture();
 
@@ -104,26 +88,26 @@ public class RenderTextureSetter : MonoBehaviour, IInitializable
     {
         ReleaseTexture();
 
-        int width  = this.size.x <= 0 ? Screen.width  : this.size.x;
-        int height = this.size.y <= 0 ? Screen.height : this.size.y;
+        var width  = size.x <= 0 ? Screen.width  : size.x;
+        var height = size.y <= 0 ? Screen.height : size.y;
 
-        this.RenderTexture = new RenderTexture(width, height, 0, this.format)
+        RenderTexture = new RenderTexture(width, height, 0, format)
         {
-            antiAliasing = (int)this.antiAliasing,
-            depth        = (int)this.depth
+            antiAliasing = (int)antiAliasing,
+            depth        = (int)depth
         };
 
-        this.camera.targetTexture = this.RenderTexture;
+        camera.targetTexture = RenderTexture;
     }
 
     protected virtual void ReleaseTexture()
     {
-        this.camera.targetTexture = null;
+        camera.targetTexture = null;
 
-        if (this.RenderTexture != null)
+        if (RenderTexture != null)
         {
-            DestroyImmediate(this.RenderTexture);
-            this.RenderTexture = null;
+            DestroyImmediate(RenderTexture);
+            RenderTexture = null;
         }
     }
 
