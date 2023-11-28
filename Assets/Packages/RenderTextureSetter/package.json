@@ -1,8 +1,8 @@
 {
     "name"       : "com.xjine.render_texture_setter",
     "displayName": "Render Texture Setter", 
-    "version"    : "1.0.1",
-    "unity"      : "2021.3",
+    "version"    : "1.0.2",
+    "unity"      : "2022.3",
     "description": "Set RenderTexture to camera in runtime.",
     "author"     :
     {

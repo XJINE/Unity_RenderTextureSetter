@@ -65,12 +65,27 @@ public class RenderTextureSetter : MonoBehaviour, IInitializable
 
     protected virtual void Awake()
     {
+        if (!Application.isPlaying)
+        {
+            return;
+        }
+
         Initialize();
     }
 
     protected virtual void OnValidate()
     {
+        if (!Application.isPlaying)
+        {
+            return;
+        }
+
         Initialize();
+    }
+
+    protected virtual void OnDestroy()
+    {
+        ReleaseTexture();
     }
 
     public virtual bool Initialize()
@@ -102,7 +117,10 @@ public class RenderTextureSetter : MonoBehaviour, IInitializable
 
     protected virtual void ReleaseTexture()
     {
-        camera.targetTexture = null;
+        if (camera != null)
+        {
+            camera.targetTexture = null;
+        }
 
         if (RenderTexture != null)
         {
